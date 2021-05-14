@@ -2,12 +2,14 @@ pipeline {
     agent any
     
 
-    script {
-        FILES_LIST = sh (script: "ls inventory", returnStdout: true).trim()
-        echo "File list: ${FILES_LIST}"
-    }
+    
 
     parameters{
+        script {
+            FILES_LIST = sh (script: "ls inventory", returnStdout: true).trim()
+            echo "File list: ${FILES_LIST}"
+        }
+        
         choice(choices: ['deploy.yml', 'destroy.yml'], description: "Action to perform", name: 'playbook')
         string(description: "Inventory to deploy against", name: "inventory", defaultValue: "docker-desktop.yml")
         password(description: "Vault Secret Key", name: "vault", defaultValue: "")
