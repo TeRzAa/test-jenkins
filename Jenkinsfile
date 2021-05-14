@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    
+    def  FILES_LIST = sh (script: "ls inventory", returnStdout: true).trim()
+    
     parameters{
         choice(choices: ['deploy.yml', 'destroy.yml'], description: "Action to perform", name: 'playbook')
         string(description: "Inventory to deploy against", name: "inventory", defaultValue: "docker-desktop.yml")
